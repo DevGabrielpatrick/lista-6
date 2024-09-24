@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+// Função para remover espaços, pontuações e transformar todas as letras em minúsculas
+void limparString(char *original, char *limpa) {
+    int j = 0;
+    for (int i = 0; original[i] != '\0'; i++) {
+        // Considerar apenas letras e números
+        if (isalnum(original[i])) {
+            limpa[j++] = tolower(original[i]); // Transformar em minúsculas
+        }
+    }
+    limpa[j] = '\0'; // Adicionar o caractere nulo no final
+}
+
+// Função para verificar se a string é palíndromo
+int ehPalindromo(char *str) {
+    int tamanho = strlen(str);
+    
+    for (int i = 0; i < tamanho / 2; i++) {
+        if (str[i] != str[tamanho - 1 - i]) {
+            return 0; // Não é palíndromo
+        }
+    }
+    return 1; // É palíndromo
+}
+
+int main() {
+    char stringOriginal[200], stringLimpa[200];
+
+    // Ler a string do usuário
+    printf("Digite uma string: ");
+    fgets(stringOriginal, sizeof(stringOriginal), stdin);
+
+    // Remove o '\n' que pode ser inserido pelo fgets
+    stringOriginal[strcspn(stringOriginal, "\n")] = 0;
+
+    // Limpar a string removendo espaços, pontuações e transformando em minúsculas
+    limparString(stringOriginal, stringLimpa);
+
+    // Verificar se a string limpa é um palíndromo
+    if (ehPalindromo(stringLimpa)) {
+        printf("A string e um palindromo!\n");
+    } else {
+        printf("A string nao e um palindromo.\n");
+    }
+
+    return 0;
+}

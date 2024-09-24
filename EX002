@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <string.h>
+
+// Função para calcular o tamanho da string sem usar strlen
+int calcularTamanhoSemStrlen(char str[]) {
+    int i = 0;
+    
+    // Contar os caracteres até encontrar o caractere nulo '\0'
+    while (str[i] != '\0') {
+        i++;
+    }
+    
+    return i;
+}
+
+int main() {
+    char string[100];
+    int tamanhoStrlen, tamanhoSemStrlen;
+
+    // Ler a string do usuário
+    printf("Digite uma string: ");
+    fgets(string, sizeof(string), stdin);
+
+    // Remove o '\n' que pode ser inserido pelo fgets
+    string[strcspn(string, "\n")] = 0;
+
+    // (a) Calcular o tamanho utilizando strlen
+    tamanhoStrlen = strlen(string);
+
+    // (b) Calcular o tamanho sem utilizar strlen
+    tamanhoSemStrlen = calcularTamanhoSemStrlen(string);
+
+    // (c) Comparar os dois resultados
+    printf("Tamanho calculado com strlen: %d\n", tamanhoStrlen);
+    printf("Tamanho calculado sem strlen: %d\n", tamanhoSemStrlen);
+
+    // Verificar se os tamanhos são iguais
+    if (tamanhoStrlen == tamanhoSemStrlen) {
+        printf("Os resultados são iguais!\n");
+    } else {
+        printf("Os resultados são diferentes!\n");
+    }
+
+    return 0;
+}

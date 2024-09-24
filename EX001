@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+#define MAX_LEN 100
+
+// Função para validar a senha com as regras fornecidas
+int validarSenha(char senha[]) {
+    int temMaiuscula = 0, temMinuscula = 0, temNumero = 0;
+    int tamanho = strlen(senha);
+
+    // Verificar o tamanho da senha
+    if (tamanho < 8 || tamanho > MAX_LEN) {
+        return 0;
+    }
+
+    // Percorrer a senha para verificar se atende os critérios
+    for (int i = 0; i < tamanho; i++) {
+        if (isupper(senha[i])) {
+            temMaiuscula = 1;
+        }
+        if (islower(senha[i])) {
+            temMinuscula = 1;
+        }
+        if (isdigit(senha[i])) {
+            temNumero = 1;
+        }
+    }
+
+    // A senha é válida se tiver uma letra maiúscula, uma minúscula e um número
+    if (temMaiuscula && temMinuscula && temNumero) {
+        return 1;
+    }
+
+    return 0;
+}
+
+int main() {
+    char senha[MAX_LEN + 1];  // +1 para o caractere nulo
+
+    printf("Digite a senha (entre 8 e %d caracteres): ", MAX_LEN);
+    fgets(senha, sizeof(senha), stdin);
+
+    // Remove o '\n' se for lido pelo fgets
+    senha[strcspn(senha, "\n")] = 0;
+
+    if (validarSenha(senha)) {
+        printf("Senha válida!\n");
+    } else {
+        printf("Senha inválida! Certifique-se de que a senha tem:\n");
+        printf("- Pelo menos 8 caracteres\n");
+        printf("- Pelo menos uma letra maiúscula\n");
+        printf("- Pelo menos uma letra minúscula\n");
+        printf("- Pelo menos um número\n");
+        printf("- No máximo %d caracteres\n", MAX_LEN);
+    }
+
+    return 0;
+}
